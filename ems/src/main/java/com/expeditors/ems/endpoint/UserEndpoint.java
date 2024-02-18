@@ -1,7 +1,9 @@
 package com.expeditors.ems.endpoint;
 
 import com.expeditors.ems.dto.reponse.BaseResponse;
+import com.expeditors.ems.dto.reponse.BaseResponseWithoutData;
 import com.expeditors.ems.dto.request.UserCreateRequest;
+import com.expeditors.ems.dto.request.UserUpdateRequest;
 import com.expeditors.ems.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +23,20 @@ public class UserEndpoint {
            return new BaseResponse("Failed",e.getMessage(), userCreateRequest);
        }
     }
-    @GetMapping
+    @GetMapping("/v")
     public BaseResponse getuser(HttpServletRequest request){
         userService.validateuser(Long.parseLong(request.getHeader("userid")),"Admin");
         return new BaseResponse("success","user displayed successfully",userService.getUser());
     }
-//    public BaseResponse getUserDetail(){
-//
-//            return new BaseResponse("Success","user displayed successfully",userService.getUser());
-//            //error is handled in GlobalExceptionhandler
-//        }
+    @GetMapping
+    public BaseResponse getUserDetail(){
+
+            return new BaseResponse("Success","user displayed successfully",userService.getUser());
+            //error is handled in GlobalExceptionhandler
+        }
+    @PutMapping
+    public BaseResponseWithoutData updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
+        userService.updateUser(userUpdateRequest);
+        return new BaseResponseWithoutData("Success","data updated successfully");
+    }
 }

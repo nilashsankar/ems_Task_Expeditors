@@ -2,21 +2,21 @@ package com.expeditors.ems.service;
 
 import com.expeditors.ems.dto.reponse.UserResponse;
 import com.expeditors.ems.dto.request.UserCreateRequest;
+import com.expeditors.ems.dto.request.UserUpdateRequest;
 import com.expeditors.ems.entity.Role;
 import com.expeditors.ems.entity.User;
 import com.expeditors.ems.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserService {
-    @Autowired
-    private DataSource dataSource;
+//    @Autowired
+//    private DataSource dataSource;
     @Autowired
     private UserRepository userRepository;
 
@@ -75,5 +75,18 @@ public class UserService {
         if(!user.getRole().getName().equalsIgnoreCase(resource)){
             throw new RuntimeException("unauthorized user");
         }
+    }
+
+    public void updateUser(UserUpdateRequest userUpdateRequest) {
+        User user=this.userRepository.findById(userUpdateRequest.getId())
+                .orElseThrow(()-> new RuntimeException("User not found"));
+
+        user.setName(userUpdateRequest.getName());
+        Role role = new Role();
+        role.setId(userUpdateRequest.getRoleId());
+        user.setRole(role);
+        user.setEmail(userUpdateRequest.getEmail());
+
+        userRepository.save(user);
     }
 }
