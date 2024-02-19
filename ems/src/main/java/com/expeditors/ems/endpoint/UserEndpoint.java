@@ -35,7 +35,8 @@ public class UserEndpoint {
             //error is handled in GlobalExceptionhandler
         }
     @PutMapping
-    public BaseResponseWithoutData updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
+    public BaseResponseWithoutData updateUser(@RequestBody UserUpdateRequest userUpdateRequest,HttpServletRequest request) {
+        userService.validateuser(Long.parseLong(request.getHeader("userid")),"Admin");
         userService.updateUser(userUpdateRequest);
         return new BaseResponseWithoutData("Success","data updated successfully");
     }

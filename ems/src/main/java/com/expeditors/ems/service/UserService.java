@@ -8,6 +8,7 @@ import com.expeditors.ems.entity.User;
 import com.expeditors.ems.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class UserService {
 //    private DataSource dataSource;
     @Autowired
     private UserRepository userRepository;
-
+    @Transactional
     public void saveUser(UserCreateRequest userCreateRequest) {
         User user = new User();
         user.setName(userCreateRequest.getName());
@@ -82,9 +83,6 @@ public class UserService {
                 .orElseThrow(()-> new RuntimeException("User not found"));
 
         user.setName(userUpdateRequest.getName());
-        Role role = new Role();
-        role.setId(userUpdateRequest.getRoleId());
-        user.setRole(role);
         user.setEmail(userUpdateRequest.getEmail());
 
         userRepository.save(user);

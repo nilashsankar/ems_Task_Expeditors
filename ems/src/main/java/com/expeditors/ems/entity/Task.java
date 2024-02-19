@@ -1,10 +1,14 @@
 package com.expeditors.ems.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,7 +25,13 @@ public class Task {
     private String taskDescrip;
     @Column(name="created_at")
     private LocalDateTime createdAt;
-    @Column(name="created_by")
-    private Long taskCreatedBy;
+    @ManyToOne
+    @JoinColumn(name="created_by",referencedColumnName = "id")
+    private User users;
 
+//    @Fetch(FetchMode.SUBSELECT)
+//    @OneToMany(mappedBy = "student", targetEntity = TaskAllocation.class, //mapping is object of the studentfee entity
+//            fetch= FetchType.EAGER,cascade = CascadeType.ALL)
+//
+//    private List<TaskAllocation> taskAllocationList;
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -15,10 +17,19 @@ public class TaskAllocation {
     private Long id;
     @ManyToOne
     @JoinColumn(name="task_id", referencedColumnName = "id")
-    private Task taskId;
+    private Task task;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable()
-    private User developerId;
+    @ManyToOne()
+    @JoinColumn(name="developer _id", referencedColumnName = "id")
+    private User developer;
+
+    @ManyToOne
+    @JoinColumn(name="assigned_by",referencedColumnName = "id")
+    private User managers;
+
+    @Column(name="assigned_at")
+    private LocalDateTime assignedAt;
+    @Column(name="status")
+    private String status;
 
 }
