@@ -1,15 +1,16 @@
 package com.expeditors.ems.endpoint;
 
+
+import com.expeditors.ems.dto.reponse.BaseResponse;
 import com.expeditors.ems.dto.reponse.BaseResponseWithoutData;
 import com.expeditors.ems.dto.request.TaskAllocationRequest;
 import com.expeditors.ems.dto.request.TaskCreateRequest;
+import com.expeditors.ems.dto.request.TaskDeveloperRequest;
+import com.expeditors.ems.service.DeveloperService;
 import com.expeditors.ems.service.TaskService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/task")
@@ -23,11 +24,18 @@ public class TaskEndpoint {
         taskService.saveTask(taskCreateRequest);
         return new BaseResponseWithoutData("Success","Task inserted");
     }
-    @PostMapping("/dev")
-    public BaseResponseWithoutData postTaskDeveloper(@RequestBody TaskAllocationRequest taskAllocationRequest, HttpServletRequest request){
+    @PostMapping("/assign")
+    public BaseResponseWithoutData postTaskByDeveloper(@RequestBody TaskAllocationRequest taskAllocationRequest, HttpServletRequest request){
         taskService.validateuser(Long.parseLong(request.getHeader("userid")),"Manager");
         taskService.assignTask(taskAllocationRequest);
         return new BaseResponseWithoutData("Success","Task inserted");
     }
+    @GetMapping
+    public BaseResponse getTaskByDeveloper(@RequestBody TaskDeveloperRequest taskDeveloperRequest, HttpServletRequest request) {
+        taskService.validateuser(Long.parseLong(request.getHeader("userid")),"Manager");
+        return new BaseResponse("Success","Developer tasks displayed", taskService.getTaskByDeveloper(taskDeveloperRequest));
+    }
+
+
 
 }

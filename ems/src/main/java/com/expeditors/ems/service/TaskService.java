@@ -1,7 +1,11 @@
 package com.expeditors.ems.service;
 
+import com.expeditors.ems.dto.reponse.DeveloperTask;
+import com.expeditors.ems.dto.reponse.TaskReponse;
+import com.expeditors.ems.dto.reponse.UserResponse;
 import com.expeditors.ems.dto.request.TaskAllocationRequest;
 import com.expeditors.ems.dto.request.TaskCreateRequest;
+import com.expeditors.ems.dto.request.TaskDeveloperRequest;
 import com.expeditors.ems.entity.Task;
 import com.expeditors.ems.entity.TaskAllocation;
 import com.expeditors.ems.entity.User;
@@ -12,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class TaskService {
@@ -59,5 +66,31 @@ public class TaskService {
 
         taskAllocationRespository.save(taskAllocation);
 
+    }
+
+    public DeveloperTask getTaskByDeveloper(TaskDeveloperRequest taskDeveloperRequest) {
+        User users = userRepository.findById(taskDeveloperRequest.getDeveloperId()).get();
+
+        //setting Developer details
+        DeveloperTask developerTask = new DeveloperTask();
+        developerTask.setDeveloperId(taskDeveloperRequest.getDeveloperId());
+        developerTask.setDeveloperName(users.getName());
+        developerTask.setEmail(users.getEmail());
+
+        List<TaskAllocation> taskAllocationList = taskAllocationRespository.findByDeveloperId(taskDeveloperRequest.getDeveloperId());
+        List<TaskReponse> taskReponseList = new ArrayList<>();
+        taskAllocationList.forEach(taskAllocation -> {
+            TaskReponse taskReponse = new TaskReponse();
+            taskReponse.setTaskId(taskAllocation.getTask().getTaskId());
+            taskReponse.setTaskName(taskAllocation.getTask().getTaskName());
+            taskReponse.setDecrip(taskAllocation.getTask().getTaskDescrip());
+            taskReponse.setCreatebAt(taskAllocation.getTask().getCreatedAt());
+            taskReponse.setStatus(taskAllocation.getStatus());
+            taskReponseList.add(taskReponse);
+        });
+
+        developerTask.setListOfTasks(taskReponseList);
+
+        return developerTask;
     }
 }

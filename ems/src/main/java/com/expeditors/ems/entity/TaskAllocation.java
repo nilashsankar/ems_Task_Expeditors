@@ -20,7 +20,7 @@ public class TaskAllocation {
     private Task task;
 
     @ManyToOne()
-    @JoinColumn(name="developer _id", referencedColumnName = "id")
+    @JoinColumn(name="developer_id", referencedColumnName = "id")
     private User developer;
 
     @ManyToOne
