@@ -77,8 +77,12 @@ public class TaskService {
         developerTask.setDeveloperName(users.getName());
         developerTask.setEmail(users.getEmail());
 
+        //getting task_allocation from Database
         List<TaskAllocation> taskAllocationList = taskAllocationRespository.findByDeveloperId(taskDeveloperRequest.getDeveloperId());
-        List<TaskReponse> taskReponseList = new ArrayList<>();
+        List<TaskReponse> taskReponseList = new ArrayList<>(); //creating TaskResponse List
+
+        //forEach loop for setting task_details for the specific developer
+        // And storing it in TaskReponselist
         taskAllocationList.forEach(taskAllocation -> {
             TaskReponse taskReponse = new TaskReponse();
             taskReponse.setTaskId(taskAllocation.getTask().getTaskId());
