@@ -1,11 +1,13 @@
 package com.expeditors.ems.endpoint;
 
 
-import com.expeditors.ems.dto.reponse.BaseResponse;
-import com.expeditors.ems.dto.reponse.BaseResponseWithoutData;
+import com.expeditors.ems.dto.response.BaseResponse;
+import com.expeditors.ems.dto.response.BaseResponseWithoutData;
+import com.expeditors.ems.dto.request.DeveloperTaskIdRequest;
 import com.expeditors.ems.dto.request.TaskAllocationRequest;
 import com.expeditors.ems.dto.request.TaskCreateRequest;
 import com.expeditors.ems.dto.request.TaskDeveloperRequest;
+import com.expeditors.ems.dto.response.PutTaskRespone;
 import com.expeditors.ems.service.TaskService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,11 @@ public class TaskEndpoint {
         return new BaseResponse("Success","Developer tasks displayed", taskService.getTaskByDeveloper(taskDeveloperRequest));
     }
 
+    @PutMapping("/putstatus")
+    public BaseResponse putTaskStatus(@RequestBody DeveloperTaskIdRequest developerTaskIdRequest) {
+        PutTaskRespone putTaskRespone = taskService.updateTaskStatus(developerTaskIdRequest);
+        return new BaseResponse("Success",putTaskRespone.getPutResponse(),putTaskRespone.getCompleteTaskList());
+    }
 
 
 }

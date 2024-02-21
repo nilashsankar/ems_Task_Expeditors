@@ -1,6 +1,6 @@
 package com.expeditors.ems.handlers;
 
-import com.expeditors.ems.dto.reponse.BaseResponseWithoutData;
+import com.expeditors.ems.dto.response.BaseResponseWithoutData;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

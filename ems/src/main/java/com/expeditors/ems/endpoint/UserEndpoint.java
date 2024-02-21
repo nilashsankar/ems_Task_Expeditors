@@ -1,7 +1,7 @@
 package com.expeditors.ems.endpoint;
 
-import com.expeditors.ems.dto.reponse.BaseResponse;
-import com.expeditors.ems.dto.reponse.BaseResponseWithoutData;
+import com.expeditors.ems.dto.response.BaseResponse;
+import com.expeditors.ems.dto.response.BaseResponseWithoutData;
 import com.expeditors.ems.dto.request.UserCreateRequest;
 import com.expeditors.ems.dto.request.UserUpdateRequest;
 import com.expeditors.ems.service.UserService;

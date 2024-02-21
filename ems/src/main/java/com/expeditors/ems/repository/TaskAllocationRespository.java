@@ -1,6 +1,5 @@
 package com.expeditors.ems.repository;
 
-import com.expeditors.ems.dto.reponse.DeveloperTask;
 import com.expeditors.ems.entity.TaskAllocation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,4 +10,5 @@ public interface TaskAllocationRespository extends JpaRepository<TaskAllocation,
     List<TaskAllocation> findByDeveloperId(Long developerId);
 
 
+    TaskAllocation findByDeveloperIdAndTaskTaskId(Long developerId,Long TaskId);
 }

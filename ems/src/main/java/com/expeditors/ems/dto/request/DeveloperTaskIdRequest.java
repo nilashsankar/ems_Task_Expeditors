@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DeveloperIdRequest {
+public class DeveloperTaskIdRequest {
     private Long developerId;
     private Long taskId;
-    private String
+    private String status;
 }

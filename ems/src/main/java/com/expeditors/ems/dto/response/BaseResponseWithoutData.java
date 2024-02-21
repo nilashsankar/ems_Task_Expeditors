@@ -1,4 +1,4 @@
-package com.expeditors.ems.dto.reponse;
+package com.expeditors.ems.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

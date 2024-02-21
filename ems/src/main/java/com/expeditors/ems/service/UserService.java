@@ -1,6 +1,6 @@
 package com.expeditors.ems.service;
 
-import com.expeditors.ems.dto.reponse.UserResponse;
+import com.expeditors.ems.dto.response.UserResponse;
 import com.expeditors.ems.dto.request.UserCreateRequest;
 import com.expeditors.ems.dto.request.UserUpdateRequest;
 import com.expeditors.ems.entity.Role;

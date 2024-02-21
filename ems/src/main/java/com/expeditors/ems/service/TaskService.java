@@ -1,8 +1,9 @@
 package com.expeditors.ems.service;
 
-import com.expeditors.ems.dto.reponse.DeveloperTask;
-import com.expeditors.ems.dto.reponse.TaskReponse;
-import com.expeditors.ems.dto.reponse.UserResponse;
+import com.expeditors.ems.dto.response.DeveloperTask;
+import com.expeditors.ems.dto.response.PutTaskRespone;
+import com.expeditors.ems.dto.response.TaskReponse;
+import com.expeditors.ems.dto.request.DeveloperTaskIdRequest;
 import com.expeditors.ems.dto.request.TaskAllocationRequest;
 import com.expeditors.ems.dto.request.TaskCreateRequest;
 import com.expeditors.ems.dto.request.TaskDeveloperRequest;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class TaskService {
@@ -97,5 +97,37 @@ public class TaskService {
         developerTask.setListOfTasks(taskReponseList);
 
         return developerTask;
+    }
+    public List<TaskReponse> completedTask(DeveloperTaskIdRequest developerTaskIdRequest) {
+        List <TaskReponse> taskReponseList = new ArrayList<>();
+        List<TaskAllocation> taskAllocationList = taskAllocationRespository.findByDeveloperId(developerTaskIdRequest.getDeveloperId());
+        taskAllocationList.forEach(taskAllocation -> {
+            if(taskAllocation.getStatus().equalsIgnoreCase("Completed")) {
+                TaskReponse taskReponse1 = new TaskReponse();
+                taskReponse1.setTaskId(taskAllocation.getTask().getTaskId());
+                taskReponse1.setTaskName(taskAllocation.getTask().getTaskName());
+                taskReponse1.setDecrip(taskAllocation.getTask().getTaskDescrip());
+                taskReponse1.setCreatebAt(taskAllocation.getTask().getCreatedAt());
+                taskReponse1.setStatus(taskAllocation.getStatus());
+                taskReponseList.add(taskReponse1);
+            }
+        });
+        return taskReponseList;
+    }
+    public PutTaskRespone updateTaskStatus(DeveloperTaskIdRequest developerTaskIdRequest) {
+        //fetching specific task for specific developer
+        TaskAllocation taskAllocation = taskAllocationRespository.findByDeveloperIdAndTaskTaskId(developerTaskIdRequest.getDeveloperId(),developerTaskIdRequest.getTaskId());
+       //creating obj for the dto response
+        PutTaskRespone putTaskRespone = new PutTaskRespone();
+        //checking condition for status
+        // else adding completed task to a list
+        if(taskAllocation.getStatus().equalsIgnoreCase("Incomplete")) {
+            taskAllocation.setStatus("Completed");
+        }
+        else { putTaskRespone.setPutResponse("Task already completed");}
+        taskAllocationRespository.save(taskAllocation);
+
+        putTaskRespone.setCompleteTaskList(completedTask(developerTaskIdRequest));
+        return putTaskRespone;
     }
 }
