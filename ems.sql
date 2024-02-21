@@ -56,3 +56,17 @@ insert into expense_type(id, type) values (4, 'Business');
 insert into expense_status(id, status) values (1, 'Accepted');
 insert into expense_status(id, status) values (2, 'Rejected');
 insert into expense_status(id, status) values (3, 'Amount credited');
+
+select * from user_detail;
+select * from role;
+select * from task;
+select * from task_allocation;
+
+insert into user_detail(name,email,role_id,created_at) values('luffy','luff@gmail.com',2,'2024-02-01 01:01:59');
+insert into task(name,description,created_by,created_at) values ('Apple Vision Pro application ','test Apple application',3,'2024-02-01 01:01:05');
+insert into task_allocation(task_id,developer_id,assigned_by,assigned_at,status) 
+values (2,5,3,'2024-02-01 01:22:22','Incomplete');
+
+update task_allocation set status='Incomplete' where id=5; 
+
+
