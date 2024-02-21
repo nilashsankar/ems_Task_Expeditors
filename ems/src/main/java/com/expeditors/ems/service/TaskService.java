@@ -79,6 +79,7 @@ public class TaskService {
 
         //getting task_allocation from Database
         List<TaskAllocation> taskAllocationList = taskAllocationRespository.findByDeveloperId(taskDeveloperRequest.getDeveloperId());
+
         List<TaskReponse> taskReponseList = new ArrayList<>(); //creating TaskResponse List
 
         //forEach loop for setting task_details for the specific developer
