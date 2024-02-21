@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Table(name="task_allocation")
-public class TaskAllocation {
+public class TaskAllocation{
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
