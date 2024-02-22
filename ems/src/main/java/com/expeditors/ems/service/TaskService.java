@@ -123,6 +123,7 @@ public class TaskService {
         // else adding completed task to a list
         if(taskAllocation.getStatus().equalsIgnoreCase("Incomplete")) {
             taskAllocation.setStatus("Completed");
+            putTaskRespone.setPutResponse("Task Updated");
         }
         else { putTaskRespone.setPutResponse("Task already completed");}
         taskAllocationRespository.save(taskAllocation);
