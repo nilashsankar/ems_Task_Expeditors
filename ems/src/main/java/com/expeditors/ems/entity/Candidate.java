@@ -10,16 +10,16 @@ import lombok.Setter;
 @Table(name="candidate")
 public class Candidate {
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     private Integer id;
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
     @ManyToOne
-    @JoinColumn(name="interviewer_id",referencedColumnName = "id")
+    @JoinColumn(name = "interviewer_id", referencedColumnName = "id")
     private User Manager;
     @ManyToOne
-    @JoinColumn(name = "status_id",referencedColumnName = "id")
+    @JoinColumn(name = "status_id", referencedColumnName = "id")
     private HiringStatus status;
 }
