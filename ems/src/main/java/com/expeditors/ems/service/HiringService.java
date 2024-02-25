@@ -2,11 +2,15 @@ package com.expeditors.ems.service;
 
 import com.expeditors.ems.dto.request.CreateCandidateRequest;
 import com.expeditors.ems.entity.Candidate;
+import com.expeditors.ems.entity.HiringStatus;
+import com.expeditors.ems.entity.User;
 import com.expeditors.ems.repository.CandidateRepository;
 import com.expeditors.ems.repository.HiringStatusRepository;
 import com.expeditors.ems.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class HiringService {
@@ -22,6 +26,15 @@ public class HiringService {
         candidate.setId(createCandidateRequest.getId());
         candidate.setName(createCandidateRequest.getName());
         candidate.setEmail(createCandidateRequest.getEmail());
-        candidate.;
+
+        User manager = new User();
+        manager.setId(createCandidateRequest.getInterviewerId());
+        candidate.setManager(manager);
+
+        HiringStatus status = new HiringStatus();
+        status.setId(1L);
+        candidate.setStatus(status);
+        candidate.setScheduledTime(LocalDateTime.now());
+        candidateRepository.save(candidate);
     }
 }

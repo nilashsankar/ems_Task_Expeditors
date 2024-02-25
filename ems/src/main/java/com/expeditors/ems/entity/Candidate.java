@@ -1,8 +1,11 @@
 package com.expeditors.ems.entity;
 
+import jakarta.annotation.Generated;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -11,7 +14,7 @@ import lombok.Setter;
 public class Candidate {
     @Id
     @Column(name = "id")
-    private Integer id;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "email")
@@ -22,4 +25,7 @@ public class Candidate {
     @ManyToOne
     @JoinColumn(name = "status_id", referencedColumnName = "id")
     private HiringStatus status;
+    @Column(name="scheduled_at")
+    private LocalDateTime scheduledTime;
+
 }

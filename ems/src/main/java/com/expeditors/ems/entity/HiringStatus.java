@@ -14,7 +14,7 @@ import lombok.Setter;
 public class HiringStatus {
     @Id
     @Column(name="id")
-    private Integer id;
+    private Long id;
     @Column(name="status")
     private String status;
 }
