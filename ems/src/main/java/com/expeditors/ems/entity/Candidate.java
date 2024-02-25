@@ -1,11 +1,7 @@
 package com.expeditors.ems.entity;
-
-import jakarta.annotation.Generated;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.lang.model.element.Element;
 import java.time.LocalDateTime;
 
 @Entity
