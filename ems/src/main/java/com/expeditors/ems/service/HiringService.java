@@ -23,7 +23,7 @@ public class HiringService {
 
     public void createCandidate(CreateCandidateRequest createCandidateRequest) {
         Candidate candidate = new Candidate();
-        candidate.setId(createCandidateRequest.getId());
+        candidate.setId(createCandidateRequest.getCanId());
         candidate.setName(createCandidateRequest.getName());
         candidate.setEmail(createCandidateRequest.getEmail());
 

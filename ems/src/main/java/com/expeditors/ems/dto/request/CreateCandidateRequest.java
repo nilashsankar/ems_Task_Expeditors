@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateCandidateRequest {
-    private Long id;
+    private Long canId;
     private String name;
     private String email;
     private Long interviewerId;

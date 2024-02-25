@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.lang.model.element.Element;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Table(name="candidate")
 public class Candidate {
     @Id
+    @Generated("id")
     @Column(name = "id")
     private Long id;
     @Column(name = "name")
