@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Table(name="candidate")
 public class Candidate {
     @Id
-    @Generated("id")
     @Column(name = "id")
     private Long id;
     @Column(name = "name")
