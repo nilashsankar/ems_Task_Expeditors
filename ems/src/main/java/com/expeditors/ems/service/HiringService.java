@@ -1,5 +1,6 @@
 package com.expeditors.ems.service;
 
+import com.expeditors.ems.dto.request.CandidateUpdateStatusRequest;
 import com.expeditors.ems.dto.request.CreateCandidateRequest;
 import com.expeditors.ems.entity.Candidate;
 import com.expeditors.ems.entity.HiringStatus;
@@ -9,6 +10,7 @@ import com.expeditors.ems.repository.HiringStatusRepository;
 import com.expeditors.ems.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 
@@ -36,5 +38,11 @@ public class HiringService {
         candidate.setStatus(status);
         candidate.setScheduledTime(LocalDateTime.now());
         candidateRepository.save(candidate);
+    }
+
+    public void updateCandidateStatus(CandidateUpdateStatusRequest candidateUpdateStatusRequest) {
+        Candidate updateCandidate = candidateRepository.findById(candidateUpdateStatusRequest.getCanId()).orElseThrow(null);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForObject("localhost:8080/user",candidateUpdateStatusRequest);
     }
 }
