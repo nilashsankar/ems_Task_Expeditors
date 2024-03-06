@@ -31,8 +31,8 @@ public class TaskEndpoint {
         taskService.assignTask(taskAllocationRequest);
         return new BaseResponseWithoutData("Success","Task inserted");
     }
-    @GetMapping
-    public BaseResponse getTaskByDeveloper(@RequestBody TaskDeveloperRequest taskDeveloperRequest, HttpServletRequest request) {
+    @GetMapping("{id}")
+    public BaseResponse getTaskByDeveloper( @PathVariable("id") Long taskDeveloperRequest, HttpServletRequest request) {
         taskService.validateuser(Long.parseLong(request.getHeader("userid")),"Manager");
         return new BaseResponse("Success","Developer tasks displayed", taskService.getTaskByDeveloper(taskDeveloperRequest));
     }

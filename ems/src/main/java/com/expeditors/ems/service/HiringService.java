@@ -43,6 +43,6 @@ public class HiringService {
     public void updateCandidateStatus(CandidateUpdateStatusRequest candidateUpdateStatusRequest) {
         Candidate updateCandidate = candidateRepository.findById(candidateUpdateStatusRequest.getCanId()).orElseThrow(null);
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForObject("localhost:8080/user",candidateUpdateStatusRequest);
+//       String response= restTemplate.
     }
 }

@@ -68,17 +68,17 @@ public class TaskService {
 
     }
 
-    public DeveloperTask getTaskByDeveloper(TaskDeveloperRequest taskDeveloperRequest) {
-        User users = userRepository.findById(taskDeveloperRequest.getDeveloperId()).get();
+    public DeveloperTask getTaskByDeveloper(Long  taskDeveloperRequest) {
+        User users = userRepository.findById(taskDeveloperRequest).get();
 
         //setting Developer details
         DeveloperTask developerTask = new DeveloperTask();
-        developerTask.setDeveloperId(taskDeveloperRequest.getDeveloperId());
+        developerTask.setDeveloperId(taskDeveloperRequest);
         developerTask.setDeveloperName(users.getName());
         developerTask.setEmail(users.getEmail());
 
         //getting task_allocation from Database
-        List<TaskAllocation> taskAllocationList = taskAllocationRespository.findByDeveloperId(taskDeveloperRequest.getDeveloperId());
+        List<TaskAllocation> taskAllocationList = taskAllocationRespository.findByDeveloperId(taskDeveloperRequest);
 
         List<TaskReponse> taskReponseList = new ArrayList<>(); //creating TaskResponse List
 
@@ -131,4 +131,6 @@ public class TaskService {
         putTaskRespone.setCompleteTaskList(completedTask(developerTaskIdRequest));
         return putTaskRespone;
     }
+
+
 }
