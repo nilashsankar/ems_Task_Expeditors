@@ -1,5 +1,6 @@
 package com.expeditors.ems.endpoint;
 
+import com.expeditors.ems.dto.request.LoginRequest;
 import com.expeditors.ems.dto.response.BaseResponse;
 import com.expeditors.ems.dto.response.BaseResponseWithoutData;
 import com.expeditors.ems.dto.request.UserCreateRequest;
@@ -39,5 +40,10 @@ public class UserEndpoint {
         userService.validateuser(Long.parseLong(request.getHeader("userid")),"Admin");
         userService.updateUser(userUpdateRequest);
         return new BaseResponseWithoutData("Success","data updated successfully");
+    }
+    @PostMapping ("/login")
+    public BaseResponseWithoutData response(@RequestBody LoginRequest loginrequest){
+        userService.loginUser(loginrequest);
+        return new BaseResponseWithoutData("Success","User loggedin successfully");
     }
 }

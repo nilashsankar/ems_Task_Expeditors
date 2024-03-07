@@ -1,5 +1,6 @@
 package com.expeditors.ems.service;
 
+import com.expeditors.ems.dto.request.LoginRequest;
 import com.expeditors.ems.dto.response.UserResponse;
 import com.expeditors.ems.dto.request.UserCreateRequest;
 import com.expeditors.ems.dto.request.UserUpdateRequest;
@@ -86,5 +87,19 @@ public class UserService {
         user.setEmail(userUpdateRequest.getEmail());
 
         userRepository.save(user);
+    }
+
+    public void loginUser(LoginRequest loginrequest) {
+            try {
+                User userDetail = userRepository.findByEmail(loginrequest.getUserName());
+                if (userDetail != null && userDetail.getPassword().equals(loginrequest.getUserPassword())) {
+                    userRepository.save(userDetail);
+                } else {
+                    throw new RuntimeException("Invalid credentials");
+                }
+            }
+            catch (Exception e) {
+                throw new RuntimeException("Error in Login", e);
+            }
     }
 }

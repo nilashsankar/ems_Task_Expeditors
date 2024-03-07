@@ -131,6 +131,4 @@ public class TaskService {
         putTaskRespone.setCompleteTaskList(completedTask(developerTaskIdRequest));
         return putTaskRespone;
     }
-
-
 }

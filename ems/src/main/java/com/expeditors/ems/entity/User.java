@@ -30,6 +30,9 @@ public class User {
     @Column(name="created_at")
     private LocalDateTime createdAt;
 
+    @Column(name = "password")
+    private String password;
+
 //    @Fetch(FetchMode.SUBSELECT)
 //    @OneToMany(mappedBy = "student", targetEntity = TaskAllocation.class, //mapping is object of the studentfee entity
 //            fetch= FetchType.EAGER,cascade = CascadeType.ALL)
