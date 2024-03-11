@@ -41,6 +41,6 @@ public class ExpenseDetail {
     @JoinColumn(name="accounted_by",referencedColumnName = "id")
     private User accountant;
 
-    @Column(name="created_by")
+    @Column(name="created_at")
     private LocalDateTime createdAt;
 }

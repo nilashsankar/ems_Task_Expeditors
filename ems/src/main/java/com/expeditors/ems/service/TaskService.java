@@ -4,15 +4,15 @@ import com.expeditors.ems.dto.request.*;
 import com.expeditors.ems.dto.response.DeveloperTask;
 import com.expeditors.ems.dto.response.PutTaskRespone;
 import com.expeditors.ems.dto.response.TaskReponse;
-import com.expeditors.ems.entity.Task;
-import com.expeditors.ems.entity.TaskAllocation;
-import com.expeditors.ems.entity.User;
+import com.expeditors.ems.entity.*;
+import com.expeditors.ems.repository.ExpenseDetailsRepository;
 import com.expeditors.ems.repository.TaskAllocationRespository;
 import com.expeditors.ems.repository.TaskRepository;
 import com.expeditors.ems.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +25,8 @@ public class TaskService {
     TaskRepository taskRepository;
     @Autowired
     TaskAllocationRespository taskAllocationRespository;
+    @Autowired
+    ExpenseDetailsRepository expenseDetailsRepository;
     public void validateuser(Long requestinguserid,String resource){
         User user=this.userRepository.findById(requestinguserid)
                 .orElseThrow(()-> new RuntimeException("Manager not found"));
@@ -129,5 +131,46 @@ public class TaskService {
         return putTaskRespone;
     }
 
+    private LocalDateTime randomDateTime(){
+        long offset = Timestamp.valueOf("2022-01-01 00:00:00").getTime();
+        long end = Timestamp.valueOf("2023-01-01 00:00:00").getTime();
+        long diff = end - offset + 1;
+        Timestamp rand = new Timestamp(offset + (long)(Math.random() * diff));
+        return rand.toLocalDateTime();
+    }
+    private LocalDateTime randomDateTime1(){
+        long offset = Timestamp.valueOf("2024-01-01 00:00:00").getTime();
+        long end = Timestamp.valueOf("2024-12-03 00:00:00").getTime();
+        long diff = end - offset + 1;
+        Timestamp rand = new Timestamp(offset + (long)(Math.random() * diff));
+        return rand.toLocalDateTime();
+    }
+    public void saveExpenseUser(ExpenseRequest expenseRequest,Long userHeaderValue){
+        ExpenseDetail expenseDetail = new ExpenseDetail();
 
+        User user = new User();
+        user.setId(expenseRequest.getUserId());
+        expenseDetail.setUser(user);
+
+        ExpenseType expenseType = new ExpenseType();
+        expenseType.setId(expenseRequest.getTypeId());
+        expenseDetail.setExpenseType(expenseType);
+
+        ExpenseStatus expenseStatus = new ExpenseStatus();
+        expenseStatus.setId(expenseRequest.getStatusId());
+        expenseDetail.setExpenseStatus(expenseStatus);
+
+        expenseDetail.setSpentAt(randomDateTime());
+        expenseDetail.setDescription(expenseRequest.getDescription());
+        expenseDetail.setAmount(expenseRequest.getAmount());
+        expenseDetail.setAccountedAt(randomDateTime1());
+
+        User accountant = new User();
+        accountant.setId(userHeaderValue);
+        expenseDetail.setAccountant(accountant);
+
+        expenseDetail.setCreatedAt(LocalDateTime.now());
+
+        expenseDetailsRepository.save(expenseDetail);
+    }
 }

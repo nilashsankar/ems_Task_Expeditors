@@ -39,5 +39,10 @@ public class TaskEndpoint {
         PutTaskRespone putTaskRespone = taskService.updateTaskStatus(developerTaskIdRequest);
         return new BaseResponse("Success",putTaskRespone.getPutResponse(),putTaskRespone.getCompleteTaskList());
     }
-
+    @PostMapping("/expense")
+    public BaseResponseWithoutData postExpenseUser(@RequestBody ExpenseRequest expenseRequest,HttpServletRequest request){
+    Long userHeader=Long.parseLong(request.getHeader("userid"));
+        taskService.saveExpenseUser(expenseRequest,userHeader);
+        return new BaseResponseWithoutData("Success","inserted");
+    }
 }
