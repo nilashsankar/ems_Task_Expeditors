@@ -34,6 +34,7 @@ public class UserService {
         user.setCreatedAt(LocalDateTime.now());
         //saving the new role object containing roleId to user obj
         user.setRole(role);
+        user.setPassword(userCreateRequest.getPassword());
 
         userRepository.save(user);
     }

@@ -22,8 +22,8 @@ public class HiringEndpoint {
     }
     @PutMapping
     public BaseResponseWithoutData putStatus(@RequestBody CandidateUpdateStatusRequest candidateUpdateStatusRequest){
-        hiringService.updateCandidateStatus(candidateUpdateStatusRequest);
-        return new BaseResponseWithoutData("success","status updated");
+
+        return new BaseResponseWithoutData(" ",hiringService.updateCandidateStatus(candidateUpdateStatusRequest));
     }
 
 }
