@@ -9,6 +9,8 @@ import com.expeditors.ems.repository.CandidateRepository;
 import com.expeditors.ems.repository.HiringStatusRepository;
 import com.expeditors.ems.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,6 +24,8 @@ public class HiringService {
     HiringStatusRepository hiringStatusRepository;
     @Autowired
     CandidateRepository candidateRepository;
+    @Autowired
+    private RestTemplate restTemplate;
 
     public void createCandidate(CreateCandidateRequest createCandidateRequest) {
         Candidate candidate = new Candidate();
@@ -42,7 +46,9 @@ public class HiringService {
 
     public void updateCandidateStatus(CandidateUpdateStatusRequest candidateUpdateStatusRequest) {
         Candidate updateCandidate = candidateRepository.findById(candidateUpdateStatusRequest.getCanId()).orElseThrow(null);
-        RestTemplate restTemplate = new RestTemplate();
-//       String response= restTemplate.
+        User user = new User();
+
+        this.restTemplate.postForObject("http://localhost:8080/user", HttpMethod.POST,String.class,user);
+        System.out.println();
     }
 }

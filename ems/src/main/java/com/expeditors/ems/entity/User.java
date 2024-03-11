@@ -30,7 +30,7 @@ public class User {
     @Column(name="created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "password")
+    @Column(name = "userpassword")
     private String password;
 
 //    @Fetch(FetchMode.SUBSELECT)

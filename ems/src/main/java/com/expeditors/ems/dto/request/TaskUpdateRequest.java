@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginRequest {
-    private String userName;
-    private String password;
+public class TaskUpdateRequest {
+    private Long taskId;
+    private String taskName;
 }

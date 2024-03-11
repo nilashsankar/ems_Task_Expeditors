@@ -1,12 +1,9 @@
 package com.expeditors.ems.service;
 
+import com.expeditors.ems.dto.request.*;
 import com.expeditors.ems.dto.response.DeveloperTask;
 import com.expeditors.ems.dto.response.PutTaskRespone;
 import com.expeditors.ems.dto.response.TaskReponse;
-import com.expeditors.ems.dto.request.DeveloperTaskIdRequest;
-import com.expeditors.ems.dto.request.TaskAllocationRequest;
-import com.expeditors.ems.dto.request.TaskCreateRequest;
-import com.expeditors.ems.dto.request.TaskDeveloperRequest;
 import com.expeditors.ems.entity.Task;
 import com.expeditors.ems.entity.TaskAllocation;
 import com.expeditors.ems.entity.User;
@@ -114,7 +111,7 @@ public class TaskService {
         });
         return taskReponseList;
     }
-    public PutTaskRespone updateTaskStatus(DeveloperTaskIdRequest developerTaskIdRequest) {
+    public PutTaskRespone  updateTaskStatus(DeveloperTaskIdRequest developerTaskIdRequest) {
         //fetching specific task for specific developer
         TaskAllocation taskAllocation = taskAllocationRespository.findByDeveloperIdAndTaskTaskId(developerTaskIdRequest.getDeveloperId(),developerTaskIdRequest.getTaskId());
        //creating obj for the dto response
@@ -131,4 +128,6 @@ public class TaskService {
         putTaskRespone.setCompleteTaskList(completedTask(developerTaskIdRequest));
         return putTaskRespone;
     }
+
+
 }

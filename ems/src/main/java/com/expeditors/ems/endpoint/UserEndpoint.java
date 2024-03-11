@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @RestController
 @RequestMapping("/user")
 public class UserEndpoint {
@@ -41,9 +43,10 @@ public class UserEndpoint {
         userService.updateUser(userUpdateRequest);
         return new BaseResponseWithoutData("Success","data updated successfully");
     }
+
     @PostMapping ("/login")
-    public BaseResponseWithoutData response(@RequestBody LoginRequest loginrequest){
-        userService.loginUser(loginrequest);
-        return new BaseResponseWithoutData("Success","User loggedin successfully");
+    public BaseResponse response(@RequestBody LoginRequest loginrequest){
+        return new BaseResponse("Success","login successful", userService.loginUser(loginrequest));
     }
+
 }

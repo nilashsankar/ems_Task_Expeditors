@@ -1,12 +1,9 @@
 package com.expeditors.ems.endpoint;
 
 
+import com.expeditors.ems.dto.request.*;
 import com.expeditors.ems.dto.response.BaseResponse;
 import com.expeditors.ems.dto.response.BaseResponseWithoutData;
-import com.expeditors.ems.dto.request.DeveloperTaskIdRequest;
-import com.expeditors.ems.dto.request.TaskAllocationRequest;
-import com.expeditors.ems.dto.request.TaskCreateRequest;
-import com.expeditors.ems.dto.request.TaskDeveloperRequest;
 import com.expeditors.ems.dto.response.PutTaskRespone;
 import com.expeditors.ems.service.TaskService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,8 +29,8 @@ public class TaskEndpoint {
         return new BaseResponseWithoutData("Success","Task inserted");
     }
     @GetMapping("{id}")
-    public BaseResponse getTaskByDeveloper( @PathVariable("id") Long taskDeveloperRequest, HttpServletRequest request) {
-        taskService.validateuser(Long.parseLong(request.getHeader("userid")),"Manager");
+    public BaseResponse getTaskByDeveloper( @PathVariable("id") Long taskDeveloperRequest) {
+//        taskService.validateuser(Long.parseLong(request.getHeader("userid")),"Manager");
         return new BaseResponse("Success","Developer tasks displayed", taskService.getTaskByDeveloper(taskDeveloperRequest));
     }
 
@@ -42,6 +39,5 @@ public class TaskEndpoint {
         PutTaskRespone putTaskRespone = taskService.updateTaskStatus(developerTaskIdRequest);
         return new BaseResponse("Success",putTaskRespone.getPutResponse(),putTaskRespone.getCompleteTaskList());
     }
-
 
 }

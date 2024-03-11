@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -89,17 +90,26 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void loginUser(LoginRequest loginrequest) {
-            try {
-                User userDetail = userRepository.findByEmail(loginrequest.getUserName());
-                if (userDetail != null && userDetail.getPassword().equals(loginrequest.getUserPassword())) {
-                    userRepository.save(userDetail);
-                } else {
-                    throw new RuntimeException("Invalid credentials");
-                }
+    public HashMap<String, String> loginUser(LoginRequest loginrequest) {
+
+        HashMap<String, String> loginResponseMap = new HashMap<>();
+        try {
+            User userDetail = userRepository.findByName(loginrequest.getUserName());
+            if (userDetail != null && userDetail.getPassword().equals(loginrequest.getPassword())) {
+                loginResponseMap.put("auth", "true");
+                loginResponseMap.put("token", "A89776HNASDFA");
+                loginResponseMap.put("userId", userDetail.getId().toString());
+            } else {
+                loginResponseMap.put("auth", "false");
+                loginResponseMap.put("toke", "");
+                loginResponseMap.put("userId", "");
+//                throw new RuntimeException("Invalid credentials");
             }
-            catch (Exception e) {
-                throw new RuntimeException("Error in Login", e);
-            }
+        }
+        catch (Exception e){
+            throw new RuntimeException("Error in Login",e);
+        }
+        return loginResponseMap;
     }
+
 }
