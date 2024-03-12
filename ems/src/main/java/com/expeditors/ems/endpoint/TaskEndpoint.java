@@ -45,4 +45,9 @@ public class TaskEndpoint {
         taskService.saveExpenseUser(expenseRequest,userHeader);
         return new BaseResponseWithoutData("Success","inserted");
     }
+    @GetMapping("/expenseget")
+    public BaseResponse getExpenseUser(@RequestBody ExpenseUpdateRq expenseUpdateRq,HttpServletRequest request) {
+        Long userHeader=Long.parseLong(request.getHeader("userid"));
+        return new BaseResponse("Success",null,taskService.expenseStatusView(expenseUpdateRq));
+    }
 }

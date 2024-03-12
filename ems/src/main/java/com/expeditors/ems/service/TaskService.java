@@ -2,6 +2,7 @@ package com.expeditors.ems.service;
 
 import com.expeditors.ems.dto.request.*;
 import com.expeditors.ems.dto.response.DeveloperTask;
+import com.expeditors.ems.dto.response.ExpenseViewResponse;
 import com.expeditors.ems.dto.response.PutTaskRespone;
 import com.expeditors.ems.dto.response.TaskReponse;
 import com.expeditors.ems.entity.*;
@@ -140,7 +141,7 @@ public class TaskService {
     }
     private LocalDateTime randomDateTime1(){
         long offset = Timestamp.valueOf("2024-01-01 00:00:00").getTime();
-        long end = Timestamp.valueOf("2024-12-03 00:00:00").getTime();
+        long end = Timestamp.valueOf("2024-03-12 00:00:00").getTime();
         long diff = end - offset + 1;
         Timestamp rand = new Timestamp(offset + (long)(Math.random() * diff));
         return rand.toLocalDateTime();
@@ -172,5 +173,23 @@ public class TaskService {
         expenseDetail.setCreatedAt(LocalDateTime.now());
 
         expenseDetailsRepository.save(expenseDetail);
+    }
+
+    public Object expenseStatusView(ExpenseUpdateRq expenseUpdateRq) {
+        List<ExpenseDetail> expenseDetailsOfUser = this.expenseDetailsRepository.findAllByUserId(expenseUpdateRq.getUserId());
+        List<ExpenseViewResponse> expenseViewResponseList = new ArrayList<>();
+
+        for(ExpenseDetail exp:expenseDetailsOfUser) {
+            ExpenseViewResponse expenseViewResponse = new ExpenseViewResponse();
+            expenseViewResponse.setStatus(exp.getExpenseStatus().getStatus());
+            expenseViewResponse.setType(exp.getExpenseType().getType());
+            expenseViewResponse.setDescription(exp.getDescription());
+            expenseViewResponse.setAmount(exp.getAmount());
+            expenseViewResponse.setSpentAt(exp.getSpentAt());
+            expenseViewResponse.setCreatedAt(exp.getCreatedAt());
+            expenseViewResponseList.add(expenseViewResponse);
+        }
+
+        return expenseViewResponseList;
     }
 }
