@@ -46,7 +46,6 @@ public class TaskService {
         task.setUsers(users);
         taskRepository.save(task);
     }
-
     public void assignTask(TaskAllocationRequest taskAllocationRequest) {
         TaskAllocation taskAllocation = new TaskAllocation();
         Task task = new Task();
@@ -67,7 +66,6 @@ public class TaskService {
         taskAllocationRespository.save(taskAllocation);
 
     }
-
     public DeveloperTask getTaskByDeveloper(Long  taskDeveloperRequest) {
         User users = userRepository.findById(taskDeveloperRequest).get();
 
@@ -191,5 +189,14 @@ public class TaskService {
         }
 
         return expenseViewResponseList;
+    }
+
+    public String updateExpenseUser(ExpenseUpdateRq expenseUpdateRq) {
+        int response= expenseDetailsRepository.UpdateExpensestatusId(expenseUpdateRq.getExpenseId(),expenseUpdateRq.getStatusId());
+        System.out.println(response);
+        if(response!=1){
+            return "failed to update";
+        }
+        return "updated record expense";
     }
 }

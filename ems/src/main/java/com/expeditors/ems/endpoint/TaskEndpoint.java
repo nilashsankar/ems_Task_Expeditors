@@ -50,4 +50,10 @@ public class TaskEndpoint {
         Long userHeader=Long.parseLong(request.getHeader("userid"));
         return new BaseResponse("Success",null,taskService.expenseStatusView(expenseUpdateRq));
     }
+    @PutMapping("/expenseupdate")
+    public BaseResponseWithoutData putExpenseAccountant(@RequestBody ExpenseUpdateRq expenseUpdateRq,HttpServletRequest request){
+        Long userHeader = Long.parseLong(request.getHeader("userid"));
+        String response = taskService.updateExpenseUser(expenseUpdateRq);
+        return new BaseResponseWithoutData("api success",response);
+    }
 }

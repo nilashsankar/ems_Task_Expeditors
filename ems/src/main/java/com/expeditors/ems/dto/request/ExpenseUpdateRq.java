@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ExpenseUpdateRq {
+    private Long expenseId;
     private Long userId;
     private Long statusId;
 }
